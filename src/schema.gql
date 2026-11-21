@@ -1,0 +1,134 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Данные для добавления нового проекта"""
+input CreateProjectInput {
+  description: String
+  liveUrl: String
+  name: String!
+  repoUrl: String
+  techStack: [String!]!
+}
+
+"""Данные для добавления нового навыка"""
+input CreateSkillInput {
+  category: String
+  name: String!
+}
+
+"""Опыт работы кандидата"""
+type Experience {
+  achievements: [String!]!
+  company: String!
+  id: Int!
+  period: String!
+  position: String!
+  profileId: Int!
+}
+
+type Mutation {
+  """Добавить новый проект в портфолио"""
+  addProject(input: CreateProjectInput!): Project!
+
+  """Добавить новый навык в профиль"""
+  addSkill(input: CreateSkillInput!): Skill!
+
+  """Обновить основную информацию профиля"""
+  updateProfile(input: UpdateProfileInput!): Profile!
+}
+
+"""Цифровая визитка / профиль кандидата"""
+type Profile {
+  description: String!
+  email: String
+  experience: [Experience!]!
+  githubUrl: String
+  id: Int!
+  linkedinUrl: String
+  location: String
+  name: String!
+  projects(
+    """Количество записей (пагинация)"""
+    limit: Int = 10
+
+    """Смещение (пагинация)"""
+    offset: Int = 0
+
+    """Поиск по названию или описанию проекта"""
+    search: String
+
+    """Фильтр по технологии из стека (например, React или TypeScript)"""
+    tech: String
+  ): [Project!]!
+  skills(
+    """Фильтр по категории навыка (Core, Frontend, Tools и т.д.)"""
+    category: String
+
+    """Поиск по названию навыка"""
+    search: String
+  ): [Skill!]!
+  title: String!
+}
+
+"""Проект из портфолио кандидата"""
+type Project {
+  description: String
+  id: Int!
+  liveUrl: String
+  name: String!
+  profileId: Int!
+  repoUrl: String
+  techStack: [String!]!
+}
+
+type Query {
+  """Получить опыт работы"""
+  experience: [Experience!]!
+
+  """Получить цифровую визитку кандидата"""
+  profile: Profile!
+
+  """Получить список проектов с фильтрацией и пагинацией"""
+  projects(
+    """Количество записей (пагинация)"""
+    limit: Int = 10
+
+    """Смещение (пагинация)"""
+    offset: Int = 0
+
+    """Поиск по названию или описанию проекта"""
+    search: String
+
+    """Фильтр по технологии из стека (например, React или TypeScript)"""
+    tech: String
+  ): [Project!]!
+
+  """Получить список навыков с возможностью фильтрации"""
+  skills(
+    """Фильтр по категории навыка (Core, Frontend, Tools и т.д.)"""
+    category: String
+
+    """Поиск по названию навыка"""
+    search: String
+  ): [Skill!]!
+}
+
+"""Технический навык кандидата"""
+type Skill {
+  category: String
+  id: Int!
+  name: String!
+  profileId: Int!
+}
+
+"""Данные для обновления профиля"""
+input UpdateProfileInput {
+  description: String
+  email: String
+  githubUrl: String
+  linkedinUrl: String
+  location: String
+  name: String
+  title: String
+}
